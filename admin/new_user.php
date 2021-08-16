@@ -1,6 +1,7 @@
 <html>
+
 <head>
-  <title>Edit User</title>
+  <title>New User</title>
   <link rel="stylesheet" href="css.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -22,7 +23,7 @@
       <div class="col-12 mb-2 bg-light">
       <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-end">
       
-      <a class="btn btn-warning ml-2" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>
+      <a class="btn btn-warning ml-2" href="../logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>
         Logout
       </a>
     </nav>
@@ -40,13 +41,18 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link btn btn-info mb-2" href="profile.php">
-                  Profile
+                <a class="nav-link btn btn-info mb-2" href="users.php">
+                  Users
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link btn btn-info mb-2" href="users.php">
-                  Users
+                <a class="nav-link btn btn-info mb-2" href="user_types.php">
+                  User Types
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link btn btn-info mb-2" href="departments.php">
+                  Departments
                 </a>
               </li>
             </ul>
@@ -57,60 +63,40 @@
       <!-- col 2 -->
       <div class="col-10 bg-transparent">
         <div class="container-fluid">
-          <?php
-
-            require_once('index_model.php');
-            $indObj = new IndexModel();
-            $rs = $indObj->getUserInfoByID($_GET['UserID']);
-            while($r= mysqli_fetch_assoc($rs))
-            {
-          ?>
 
           <form method="POST"  action="insert_user.php" name="datavalid" onsubmit="return validateForm()">
             <div class="form-group row">
               <label for="UserName" class="col-sm-2 col-form-label">Name</label>
               <div class="col-4">
-                <input type="text" class="form-control form-control-sm" name="UserName" value=<?php echo $r['UserName'] ?> required>
+                <input type="text" class="form-control form-control-sm" name="UserName" value="" required>
               </div>
             </div>
 
             <div class="form-group row">
               <label for="UserEmail" class="col-sm-2 col-form-label">Email</label>
               <div class="col-4">
-                <input type="email" class="form-control form-control-sm" name="UserEmail" value=<?php echo $r['UserEmail'] ?> required>
+                <input type="email" class="form-control form-control-sm" name="UserEmail" value="" required>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="Password" class="col-sm-2 col-form-label">Passowrd</label>
+              <div class="col-4">
+                <input type="password" class="form-control form-control-sm" name="Password" value="" required>
               </div>
             </div>
 
             <div class="form-group row">
               <label for="Status" class="col-sm-2 col-form-label">Status</label>
               <div class="col-4">
-                <?php
-                if($r['Status'] == 1)
-                {
-                  ?>
-                  <div class="form-check form-check-inline">
+                <div class="form-check form-check-inline">
                   <input class="form-check-input" type="radio" name="Status" id="Active" value="1" checked>
                   <label class="form-check-label" for="Active">Acitve</label>
-                  </div>
-                  <div class="form-check form-check-inline">
+                </div>
+                <div class="form-check form-check-inline">
                   <input class="form-check-input" type="radio" name="Status" id="Deactivated" value="0">
                   <label class="form-check-label" for="Deactivated">Deactivated</label>
                 </div>
-                  <?php
-                }
-                else{
-                  ?>
-                  <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="Status" id="Active" value="1">
-                  <label class="form-check-label" for="Active">Acitve</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="Status" id="Deactivated" value="0" checked>
-                  <label class="form-check-label" for="Deactivated">Deactivated</label>
-                </div>
-                <?php
-                }
-                ?>
               </div>
             </div>
 
@@ -119,7 +105,7 @@
               <div class="col-4">
                 <select class="form-control" id="UserTypeID" name="UserTypeID">
                   <?php 
-                  require_once('index_model.php');
+                  require_once('../index_model.php');
                   $indObj = new IndexModel();
                   $rs = $indObj->getAllUserTypesInfo();
                   while($d= mysqli_fetch_assoc($rs))
@@ -137,14 +123,13 @@
                 <select class="form-control" id="DepartmentID" name="DepartmentID">
                   <option value="0">--None--</option>
                   <?php 
-                  require_once('index_model.php');
+                  require_once('../index_model.php');
                   $indObj = new IndexModel();
                   $rs = $indObj->getAllDepartmentsInfo();
                   while($d= mysqli_fetch_assoc($rs))
                   {
                       echo $str="<option value=".$d["DepartmentID"].">".$d["DepartmentName"]."</option>";
                   }	
-                }
                   ?>
                   </select>
               </div>
@@ -156,6 +141,7 @@
             function validateForm() {
               var UserName = document.forms["datavalid"]["UserName"].value;
               var UserEmail = document.forms["datavalid"]["UserEmail"].value;
+              var Password = document.forms["datavalid"]["Password"].value;
               var Status = document.forms["datavalid"]["Status"].value;
               var UserTypeID = document.forms["datavalid"]["UserTypeID"].value;
               var DepartmentID = document.forms["datavalid"]["DepartmentID"].value;

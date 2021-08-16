@@ -82,9 +82,34 @@ class IndexModel
 			return $r;
 		}
 	}
+	
 	public function insert_user($UserName,$UserEmail,$Password,$Status,$UserTypeID,$DepartmentID)
 	{
 		$q = "INSERT INTO `users` (`UserID`, `UserName`, `UserEmail`, `Password`, `Status`, `UserTypeID`, `DepartmentID`) VALUES (NULL,'".$UserName."','".$UserEmail."','".$Password."',".$Status." ,".$UserTypeID.",".$DepartmentID.")";
+		if(mysqli_query($this->con,$q))
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	public function insert_user_type($UserTypeTitle)
+	{
+		$q = "INSERT INTO `usertype` (`UserTypeID`, `UserTypeTitle`) VALUES (NULL,'".$UserTypeTitle."')";
+		if(mysqli_query($this->con,$q))
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	public function insert_department($DepartmentName)
+	{
+		$q = "INSERT INTO `department` (`DepartmentID`, `DepartmentName`) VALUES (NULL,'".$DepartmentName."')";
 		if(mysqli_query($this->con,$q))
 		{
 			return 1;
@@ -105,5 +130,68 @@ class IndexModel
 		{
 			return 0;
 		}
+	}
+	public function delete_user_type($UserTypeID)
+	{
+		$q="DELETE from usertype where `UserTypeID`=".$UserTypeID;
+		if(mysqli_query($this->con,$q))
+		{		
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	public function delete_department($DepartmentID)
+	{
+		$q="DELETE from department where `DepartmentID`=".$DepartmentID;
+		if(mysqli_query($this->con,$q))
+		{		
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	public function update_user($UserID,$UserName,$UserEmail,$Status,$UserTypeID,$DepartmentID)
+	{
+		 $q = "UPDATE `users` SET `UserName`='".$UserName."', `UserEmail`='".$UserEmail."', `Status`=".$Status.", `UserTypeID`=".$UserTypeID.", `DepartmentID`=".$DepartmentID." WHERE `UserID`=".$UserID;
+		 if(mysqli_query($this->con,$q))
+		 {
+		 	return 1;
+		 }
+		 else
+		 {
+		 	return 0;
+		 }
+		
+	}
+	public function update_user_type($UserTypeID,$UserTypeTitle)
+	{
+		 $q = "UPDATE `usertype` SET `UserTypeTitle`='".$UserTypeTitle."' WHERE `UserTypeID`=".$UserTypeID;
+		 if(mysqli_query($this->con,$q))
+		 {
+		 	return 1;
+		 }
+		 else
+		 {
+		 	return 0;
+		 }
+		
+	}
+	public function update_department($DepartmentID,$DepartmentName)
+	{
+		 $q = "UPDATE `department` SET `DepartmentName`='".$DepartmentName."' WHERE `DepartmentID`=".$DepartmentID;
+		 if(mysqli_query($this->con,$q))
+		 {
+		 	return 1;
+		 }
+		 else
+		 {
+		 	return 0;
+		 }
+		
 	}
 }

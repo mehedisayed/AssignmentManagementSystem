@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Admin</title>
+  <title>Edit Department</title>
   <link rel="stylesheet" href="css.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -20,12 +20,12 @@
     <div class="row">
       <!-- first row -->
       <div class="col-12 mb-2 bg-light">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-end">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-end">
       
-          <a class="btn btn-warning ml-2" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>
-            Logout
-          </a>
-        </nav>
+      <a class="btn btn-warning ml-2" href="../logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>
+        Logout
+      </a>
+    </nav>
       </div>
 
       <!-- 2nd row -->
@@ -34,23 +34,23 @@
         <nav class=" d-none d-md-block bg-light sidebar">
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
-              <li class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link btn btn-info mb-2 mt-2" href="#"><i class="fa fa-home" aria-hidden="true"></i>
                   Dashboard
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link btn btn-info mb-2" href="admin/users.php">
+                <a class="nav-link btn btn-info mb-2" href="users.php">
                   Users
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link btn btn-info mb-2" href="admin/user_types.php">
+                <a class="nav-link btn btn-info mb-2" href="departments.php">
                   User Types
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link btn btn-info mb-2" href="admin/departments.php">
+                <a class="nav-link btn btn-info mb-2" href="departments.php">
                   Departments
                 </a>
               </li>
@@ -61,12 +61,38 @@
 
       <!-- col 2 -->
       <div class="col-10 bg-transparent">
-      <div class="container-fluid">
-        
+        <div class="container-fluid">
+          <form method="POST"  action="update_department.php" name="datavalid" onsubmit="return validateForm()">
+          <div class="form-group row">
+              <label for="DepartmentID" class="col-sm-2 col-form-label">ID</label>
+              <div class="col-4">
+                <input type="text" class="form-control form-control-sm" name="DepartmentID" value='<?php echo $_GET['DepartmentID'] ?>' readonly required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="DepartmentName" class="col-sm-2 col-form-label">Name</label>
+              <div class="col-4">
+                <input type="text" class="form-control form-control-sm" name="DepartmentName" value='<?php echo $_GET['DepartmentName'] ?>'  required>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary"> Save</button>
+
+          </form>
+          <script>
+            function validateForm() {
+              var DepartmentName = document.forms["datavalid"]["DepartmentName"].value;
+
+              if(!DepartmentName)
+              {
+                alert("Please enter Name");
+                return false;
+              }
+            }
+          </script>
+        </div>
       </div>
     </div>
   </div>
-
 </body>
 
 </html>

@@ -1,12 +1,12 @@
 <?php
 if (isset($_GET['error'])) {
-  echo "<script>alert('Can not delete user.')</script>";
+  echo "<script>alert('Can not delete user type.')</script>";
 }
 ?>
 <html>
 
 <head>
-  <title>Users</title>
+  <title>User Types</title>
   <link rel="stylesheet" href="css.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
@@ -28,8 +28,7 @@ if (isset($_GET['error'])) {
       <!-- first row -->
       <div class="col-12 mb-2 bg-light">
         <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-end">
-
-          <a class="btn btn-warning ml-2" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>
+          <a class="btn btn-warning ml-2" href="../logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>
             Logout
           </a>
         </nav>
@@ -47,13 +46,18 @@ if (isset($_GET['error'])) {
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link btn btn-info mb-2" href="profile.php">
-                  Profile
+                <a class="nav-link btn btn-info mb-2" href="users.php">
+                  Users
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link btn btn-info mb-2" href="users.php">
-                  Users
+                <a class="nav-link btn btn-info mb-2" href="user_types.php">
+                  User Types
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link btn btn-info mb-2" href="departments.php">
+                  Departments
                 </a>
               </li>
             </ul>
@@ -65,35 +69,28 @@ if (isset($_GET['error'])) {
       <div class="col-10 bg-transparent">
         <div class="container-fluid container-responsive">
 
-          <a href="new_user.php" class="btn btn-outline-info mb-2"> New</a>
+          <a href="new_user_type.php" class="btn btn-outline-info mb-2"> New</a>
           <div class="table-responsive">
             <table class="table  table-sm table-hover table-bordered">
               <thead class="thead-dark">
                 <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">User Type</th>
-                  <th scope="col">Department</th>
+                  <th scope="col">ID</th>
+                  <th scope="col">Title</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
                 <?php
-                require_once('index_model.php');
+                require_once('../index_model.php');
                 $indObj = new IndexModel();
-                $rs = $indObj->getAllUsersInfo();
+                $rs = $indObj->getAllUserTypesInfo();
                 while ($d = mysqli_fetch_assoc($rs)) {
-                  echo $str = "<tr><td>" . $d["UserName"] . "</td><td>" . $d["UserEmail"] . "</td>";
-                  if ($d["Status"] == 1) {
-                    echo $str = " <td>Active</td>";
-                  } else {
-                    echo $str = " <td>Deactivated</td>";
-                  }
-                  echo  $str = "<td>" . $d["UserTypeTitle"] . "</td> <td>" . $d["DepartmentName"] . "</td><td>
-                      <a href='edit_user.php?UserID=" . $d["UserID"] . "' class='btn btn-outline-dark'>Edit</a> 
-                      <a href='delete_user.php?UserID=" . $d["UserID"] . "' class='btn btn-outline-danger'>Delete</a>
-                      </td></tr>";
+                  echo $str = "<tr><td>" . $d["UserTypeID"] . "</td><td>" . $d["UserTypeTitle"] . "</td> 
+                    <td>
+                      <a href='edit_user_type.php?UserTypeID=" . $d["UserTypeID"] . "&UserTypeTitle=".$d["UserTypeTitle"]."' class='btn btn-outline-dark'>Edit</a> 
+                      <a href='delete_user_type.php?UserTypeID=" . $d["UserTypeID"] . "' class='btn btn-outline-danger'>Delete</a>
+                    </td>
+                  </tr>";
                 }
                 ?>
               </tbody>
