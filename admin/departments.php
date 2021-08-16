@@ -51,7 +51,7 @@ if (isset($_GET['error'])) {
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link btn btn-info mb-2" href="departments.php">
+                <a class="nav-link btn btn-info mb-2" href="user_types.php">
                   User Types
                 </a>
               </li>
