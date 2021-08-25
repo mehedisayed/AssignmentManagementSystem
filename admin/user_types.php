@@ -38,30 +38,11 @@ if (isset($_GET['error'])) {
       <!-- col 1 -->
       <div class="col-2 bg-light border">
         <nav class=" d-none d-md-block bg-light sidebar">
-          <div class="sidebar-sticky">
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <a class="nav-link btn btn-info mb-2 mt-2" href="#"><i class="fa fa-home" aria-hidden="true"></i>
-                  Dashboard
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn btn-info mb-2" href="users.php">
-                  Users
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn btn-info mb-2" href="user_types.php">
-                  User Types
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn btn-info mb-2" href="departments.php">
-                  Departments
-                </a>
-              </li>
-            </ul>
-          </div>
+          <?php
+          require_once('sidebar.php');
+          $adminLayout = new AdminLayout();
+          $adminLayout->Sidebar();
+          ?>
         </nav>
       </div>
 
@@ -87,7 +68,7 @@ if (isset($_GET['error'])) {
                 while ($d = mysqli_fetch_assoc($rs)) {
                   echo $str = "<tr><td>" . $d["UserTypeID"] . "</td><td>" . $d["UserTypeTitle"] . "</td> 
                     <td>
-                      <a href='edit_user_type.php?UserTypeID=" . $d["UserTypeID"] . "&UserTypeTitle=".$d["UserTypeTitle"]."' class='btn btn-outline-dark'>Edit</a> 
+                      <a href='edit_user_type.php?UserTypeID=" . $d["UserTypeID"] . "&UserTypeTitle=" . $d["UserTypeTitle"] . "' class='btn btn-outline-dark'>Edit</a> 
                       <a href='delete_user_type.php?UserTypeID=" . $d["UserTypeID"] . "' class='btn btn-outline-danger'>Delete</a>
                     </td>
                   </tr>";

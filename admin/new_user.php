@@ -3,16 +3,12 @@
 <head>
   <title>New User</title>
   <link rel="stylesheet" href="css.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
   </script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
   </script>
 </head>
 
@@ -21,42 +17,23 @@
     <div class="row">
       <!-- first row -->
       <div class="col-12 mb-2 bg-light">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-end">
-      
-      <a class="btn btn-warning ml-2" href="../logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>
-        Logout
-      </a>
-    </nav>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-end">
+
+          <a class="btn btn-warning ml-2" href="../logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>
+            Logout
+          </a>
+        </nav>
       </div>
 
       <!-- 2nd row -->
       <!-- col 1 -->
       <div class="col-2 bg-light border">
         <nav class=" d-none d-md-block bg-light sidebar">
-          <div class="sidebar-sticky">
-            <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link btn btn-info mb-2 mt-2" href="#"><i class="fa fa-home" aria-hidden="true"></i>
-                  Dashboard
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn btn-info mb-2" href="users.php">
-                  Users
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn btn-info mb-2" href="user_types.php">
-                  User Types
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn btn-info mb-2" href="departments.php">
-                  Departments
-                </a>
-              </li>
-            </ul>
-          </div>
+          <?php
+          require_once('sidebar.php');
+          $adminLayout = new AdminLayout();
+          $adminLayout->Sidebar();
+          ?>
         </nav>
       </div>
 
@@ -64,7 +41,7 @@
       <div class="col-10 bg-transparent">
         <div class="container-fluid">
 
-          <form method="POST"  action="insert_user.php" name="datavalid" onsubmit="return validateForm()">
+          <form method="POST" action="insert_user.php" name="datavalid" onsubmit="return validateForm()">
             <div class="form-group row">
               <label for="UserName" class="col-sm-2 col-form-label">Name</label>
               <div class="col-4">
@@ -104,34 +81,32 @@
               <label for="UserTypeID" class="col-sm-2 col-form-label">User Type</label>
               <div class="col-4">
                 <select class="form-control" id="UserTypeID" name="UserTypeID">
-                  <?php 
+                  <?php
                   require_once('../index_model.php');
                   $indObj = new IndexModel();
                   $rs = $indObj->getAllUserTypesInfo();
-                  while($d= mysqli_fetch_assoc($rs))
-                  {
-                      echo $str="<option value=".$d["UserTypeID"].">".$d["UserTypeTitle"]."</option>";
-                  }	
+                  while ($d = mysqli_fetch_assoc($rs)) {
+                    echo $str = "<option value=" . $d["UserTypeID"] . ">" . $d["UserTypeTitle"] . "</option>";
+                  }
                   ?>
-                  </select>
+                </select>
               </div>
             </div>
 
             <div class="form-group row">
-            <label for="DepartmentID" class="col-sm-2 col-form-label">Department</label>
+              <label for="DepartmentID" class="col-sm-2 col-form-label">Department</label>
               <div class="col-4">
                 <select class="form-control" id="DepartmentID" name="DepartmentID">
                   <option value="0">--None--</option>
-                  <?php 
+                  <?php
                   require_once('../index_model.php');
                   $indObj = new IndexModel();
                   $rs = $indObj->getAllDepartmentsInfo();
-                  while($d= mysqli_fetch_assoc($rs))
-                  {
-                      echo $str="<option value=".$d["DepartmentID"].">".$d["DepartmentName"]."</option>";
-                  }	
+                  while ($d = mysqli_fetch_assoc($rs)) {
+                    echo $str = "<option value=" . $d["DepartmentID"] . ">" . $d["DepartmentName"] . "</option>";
+                  }
                   ?>
-                  </select>
+                </select>
               </div>
             </div>
             <button type="submit" class="btn btn-primary"> Save</button>
@@ -146,8 +121,7 @@
               var UserTypeID = document.forms["datavalid"]["UserTypeID"].value;
               var DepartmentID = document.forms["datavalid"]["DepartmentID"].value;
 
-              if(UserTypeID != 3 && DepartmentID == 0)
-              {
+              if (UserTypeID != 3 && DepartmentID == 0) {
                 alert("Please select a department");
                 return false;
               }

@@ -1,12 +1,12 @@
 <?php
 if (isset($_GET['error'])) {
-  echo "<script>alert('Can not delete user.')</script>";
+  echo "<script>alert('Can not delete user type.')</script>";
 }
 ?>
 <html>
 
 <head>
-  <title>Users</title>
+  <title>Semesters</title>
   <link rel="stylesheet" href="css.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
@@ -50,16 +50,14 @@ if (isset($_GET['error'])) {
       <div class="col-10 bg-transparent">
         <div class="container-fluid container-responsive">
 
-          <a href="new_user.php" class="btn btn-outline-info mb-2"> New</a>
+          <a href="new_semester.php" class="btn btn-outline-info mb-2"> New</a>
           <div class="table-responsive">
             <table class="table  table-sm table-hover table-bordered">
               <thead class="thead-dark">
                 <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Email</th>
+                  <th scope="col">ID</th>
+                  <th scope="col">Title</th>
                   <th scope="col">Status</th>
-                  <th scope="col">User Type</th>
-                  <th scope="col">Department</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
@@ -67,18 +65,19 @@ if (isset($_GET['error'])) {
                 <?php
                 require_once('../index_model.php');
                 $indObj = new IndexModel();
-                $rs = $indObj->getAllUsersInfo();
+                $rs = $indObj->getAllSemestersInfo();
                 while ($d = mysqli_fetch_assoc($rs)) {
-                  echo $str = "<tr><td>" . $d["UserName"] . "</td><td>" . $d["UserEmail"] . "</td>";
+                  echo $str = "<tr><td>" . $d["SemesterID"] . "</td><td>" . $d["SemesterTitle"] . "</td>";
                   if ($d["Status"] == 1) {
-                    echo $str = " <td>Active</td>";
+                    echo $str = " <td>Valid</td>";
                   } else {
-                    echo $str = " <td>Deactivated</td>";
+                    echo $str = " <td>Invalid</td>";
                   }
-                  echo  $str = "<td>" . $d["UserTypeTitle"] . "</td> <td>" . $d["DepartmentName"] . "</td><td>
-                      <a href='edit_user.php?UserID=" . $d["UserID"] . "' class='btn btn-outline-dark'>Edit</a> 
-                      <a href='delete_user.php?UserID=" . $d["UserID"] . "' class='btn btn-outline-danger'>Delete</a>
-                      </td></tr>";
+                  echo "<td>
+                      <a href='edit_Semester.php?SemesterID=" . $d["SemesterID"] . "&SemesterTitle=" . $d["SemesterTitle"] . "&Status=" . $d["Status"] . "' class='btn btn-outline-dark'>Edit</a> 
+                      <a href='delete_Semester.php?SemesterID=" . $d["SemesterID"] . "' class='btn btn-outline-danger'>Delete</a>
+                    </td>
+                  </tr>";
                 }
                 ?>
               </tbody>

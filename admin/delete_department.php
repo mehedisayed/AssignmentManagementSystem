@@ -9,5 +9,4 @@ require_once('../index_model.php');
 	else
 	{
 		header('Location: departments.php?error=1');
-	}	
-?>
+	}
