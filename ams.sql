@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2021 at 06:12 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.4.14
+-- Generation Time: Aug 26, 2021 at 10:35 PM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 7.3.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -108,7 +108,10 @@ CREATE TABLE `section` (
 INSERT INTO `section` (`SectionID`, `SectionName`, `CourseID`, `TeacherID`, `SemesterID`, `Status`) VALUES
 (1, 'A', 1, 3, 1, 1),
 (2, 'B', 1, 4, 1, 1),
-(3, 'A', 3, 3, 2, 1);
+(3, 'A', 3, 3, 2, 1),
+(5, 'A', 2, 3, 1, 1),
+(6, 'B', 2, 4, 1, 1),
+(7, 'B', 3, 4, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -171,7 +174,9 @@ CREATE TABLE `student_section` (
 
 INSERT INTO `student_section` (`ID`, `StudentID`, `SectionID`) VALUES
 (1, 1, 1),
-(2, 1, 1);
+(2, 2, 1),
+(4, 2, 2),
+(5, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -305,7 +310,7 @@ ALTER TABLE `assignments`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `CourseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `CourseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `department`
@@ -317,13 +322,13 @@ ALTER TABLE `department`
 -- AUTO_INCREMENT for table `section`
 --
 ALTER TABLE `section`
-  MODIFY `SectionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `SectionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `semester`
 --
 ALTER TABLE `semester`
-  MODIFY `SemesterID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `SemesterID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `student_assignment_submission`
@@ -335,7 +340,7 @@ ALTER TABLE `student_assignment_submission`
 -- AUTO_INCREMENT for table `student_section`
 --
 ALTER TABLE `student_section`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
