@@ -1,6 +1,6 @@
 <?php
 if (isset($_GET['error'])) {
-  echo "<script>alert('Can not delete user type.')</script>";
+  echo "<script>alert('Can not delete department.')</script>";
 }
 ?>
 <html>

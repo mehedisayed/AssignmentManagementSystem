@@ -37,9 +37,60 @@ class IndexModel
 			return $r;
 		}
 	}
+	public function getAllTeachersInfo()
+	{
+		$q = "SELECT *,UserTypeTitle,DepartmentName FROM users LEFT OUTER JOIN department on users.DepartmentID = department.DepartmentID LEFT OUTER JOIN usertype on users.UserTypeID= usertype.UserTypeID where users.UserTypeID=2";
+		$r = mysqli_query($this->con, $q);
+		if ($r == false) {
+			return 0;
+		} else {
+			return $r;
+		}
+	}
+	public function getAllStudentsInfo()
+	{
+		$q = "SELECT *,UserTypeTitle,DepartmentName,CONCAT(users.UserName,'[',users.UserID,']') as UserInfo FROM users LEFT OUTER JOIN department on users.DepartmentID = department.DepartmentID LEFT OUTER JOIN usertype on users.UserTypeID= usertype.UserTypeID where users.UserTypeID=1";
+		$r = mysqli_query($this->con, $q);
+		if ($r == false) {
+			return 0;
+		} else {
+			return $r;
+		}
+	}
 	public function getAllCoursesInfo()
 	{
-		$q = "SELECT *,DepartmentName FROM courses LEFT OUTER JOIN department on courses.DepartmentID = department.DepartmentID";
+		$q = "SELECT *,DepartmentName,courses.DepartmentID FROM courses LEFT OUTER JOIN department on courses.DepartmentID = department.DepartmentID";
+		$r = mysqli_query($this->con, $q);
+		if ($r == false) {
+			return 0;
+		} else {
+			return $r;
+		}
+	}
+
+	public function getAllSectionInfo()
+	{
+		$q = "SELECT * FROM `section` LEFT OUTER JOIN users on section.TeacherID=users.UserID LEFT OUTER JOIN courses on courses.CourseID=section.CourseID LEFT OUTER JOIN semester on semester.SemesterID=section.SemesterID";
+		$r = mysqli_query($this->con, $q);
+		if ($r == false) {
+			return 0;
+		} else {
+			return $r;
+		}
+	}
+	public function getSectionBySemesterIDCourseID($SemesterID, $CourseID)
+	{
+		$q = "SELECT * FROM `section` LEFT OUTER JOIN users on section.TeacherID=users.UserID LEFT OUTER JOIN courses on courses.CourseID=section.CourseID LEFT OUTER JOIN semester on semester.SemesterID=section.SemesterID where section.CourseID=" . $CourseID . " and section.SemesterID=" . $SemesterID;
+		$r = mysqli_query($this->con, $q);
+		if ($r == false) {
+			return 0;
+		} else {
+			return $r;
+		}
+	}
+	public function getStudentsBySections($SectionID)
+	{
+		$q = "SELECT student_section.ID,section.SectionID,section.SectionName,users.UserID,users.UserName FROM `student_section` LEFT OUTER JOIN users on student_section.StudentID=users.UserID LEFT OUTER JOIN section on section.SectionID=student_section.SectionID where student_section.SectionID=" . $SectionID;
 		$r = mysqli_query($this->con, $q);
 		if ($r == false) {
 			return 0;
@@ -97,9 +148,36 @@ class IndexModel
 			return 0;
 		}
 	}
+	public function insert_course($CourseCode, $CourseName, $DepartmentID, $Status)
+	{
+		$q = "INSERT INTO `courses` (`CourseID`,`CourseCode`, `CourseName`, `DepartmentID`, `Status`) VALUES (NULL,'" . $CourseCode . "','" . $CourseName . "','" . $DepartmentID . "'," . $Status . ")";
+		if (mysqli_query($this->con, $q)) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	public function insert_section($SectionName, $CourseID, $TeacherID, $SemesterID, $Status)
+	{
+		$q = "INSERT INTO `section` (`SectionID`,`SectionName`, `TeacherID`, `CourseID`, `SemesterID`,`Status`) VALUES (NULL,'" . $SectionName . "','" . $TeacherID . "','" . $CourseID . "'," . $SemesterID . "," . $Status . ")";
+		if (mysqli_query($this->con, $q)) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
 	public function insert_user_type($UserTypeTitle)
 	{
 		$q = "INSERT INTO `usertype` (`UserTypeID`, `UserTypeTitle`) VALUES (NULL,'" . $UserTypeTitle . "')";
+		if (mysqli_query($this->con, $q)) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	public function insert_student_section($SectionID, $StudentID)
+	{
+		$q = "INSERT INTO `student_section` (`ID`, `StudentID`,`SectionID`) VALUES (NULL," . $StudentID . "," . $SectionID . ")";
 		if (mysqli_query($this->con, $q)) {
 			return 1;
 		} else {
@@ -133,6 +211,15 @@ class IndexModel
 			return 0;
 		}
 	}
+	public function delete_course($CourseID)
+	{
+		$q = "DELETE from courses where `CourseID`=" . $CourseID;
+		if (mysqli_query($this->con, $q)) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
 	public function delete_user_type($UserTypeID)
 	{
 		$q = "DELETE from usertype where `UserTypeID`=" . $UserTypeID;
@@ -154,6 +241,24 @@ class IndexModel
 	public function update_user($UserID, $UserName, $UserEmail, $Status, $UserTypeID, $DepartmentID)
 	{
 		$q = "UPDATE `users` SET `UserName`='" . $UserName . "', `UserEmail`='" . $UserEmail . "', `Status`=" . $Status . ", `UserTypeID`=" . $UserTypeID . ", `DepartmentID`=" . $DepartmentID . " WHERE `UserID`=" . $UserID;
+		if (mysqli_query($this->con, $q)) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	public function update_section($SectionID, $SectionName, $CourseID, $TeacherID, $SemesterID, $Status)
+	{
+		$q = "UPDATE `section` SET `SectionName`='" . $SectionName . "', `CourseID`='" . $CourseID . "', `TeacherID`=" . $TeacherID . ", `SemesterID`=" . $SemesterID . ", `Status`=" . $Status . " WHERE `SectionID`=" . $SectionID;
+		if (mysqli_query($this->con, $q)) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	public function update_course($CourseID, $CourseCode, $CourseName, $DepartmentID, $Status)
+	{
+		$q = "UPDATE `courses` SET `CourseCode`='" . $CourseCode . "', `CourseName`='" . $CourseName . "', `DepartmentID`=" . $DepartmentID . ", `Status`=" . $Status . " WHERE `CourseID`=" . $CourseID;
 		if (mysqli_query($this->con, $q)) {
 			return 1;
 		} else {
@@ -190,6 +295,24 @@ class IndexModel
 	public function delete_semester($SemesterID)
 	{
 		$q = "DELETE from `semester` where `SemesterID`=" . $SemesterID;
+		if (mysqli_query($this->con, $q)) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	public function delete_section($SectionID)
+	{
+		$q = "DELETE from `section` where `SectionID`=" . $SectionID;
+		if (mysqli_query($this->con, $q)) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	public function remove_student($ID)
+	{
+		$q = "DELETE from `student_section` where `ID`=" . $ID;
 		if (mysqli_query($this->con, $q)) {
 			return 1;
 		} else {

@@ -1,8 +1,3 @@
-<?php
-if (isset($_GET['error'])) {
-  echo "<script>alert('Can not delete course.')</script>";
-}
-?>
 <html>
 
 <head>
@@ -49,8 +44,6 @@ if (isset($_GET['error'])) {
       <!-- col 2 -->
       <div class="col-10 bg-transparent">
         <div class="container-fluid container-responsive">
-
-          <a href="new_course.php" class="btn btn-outline-info mb-2"> New</a>
           <div class="table-responsive">
             <table class="table  table-sm table-hover table-bordered">
               <thead class="thead-dark">
@@ -75,8 +68,7 @@ if (isset($_GET['error'])) {
                     echo $str = " <td>Deactivated</td>";
                   }
                   echo  $str = "<td>" . $d["DepartmentName"] . "</td><td>
-                      <a href='edit_course.php?CourseID=" . $d["CourseID"] . "&CourseCode=" . $d["CourseCode"] . "&CourseName=" . $d["CourseName"] . "&Status=" . $d["Status"] . "&DepartmentID=" . $d["DepartmentID"] . "' class='btn btn-outline-dark'>Edit</a> 
-                      <a href='delete_course.php?CourseID=" . $d["CourseID"] . "' class='btn btn-outline-danger'>Delete</a>
+                      <a href='courseToSections.php?SemesterID=" . $_GET['SemesterID'] . "&CourseID=" . $d["CourseID"] . "' class='btn btn-outline-dark'>Show Sections</a>
                       </td></tr>";
                 }
                 ?>

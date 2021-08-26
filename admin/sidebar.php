@@ -40,6 +40,16 @@ class AdminLayout
                         Courses
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-info mb-2" href="sections.php">
+                        Sections
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-info mb-2" href="AllStudentSemester.php">
+                        Student's Courses
+                    </a>
+                </li>
             </ul>
         </div>
 <?php
