@@ -47,6 +47,16 @@ class IndexModel
 			return $r;
 		}
 	}
+	public function getAssignmentInfoBySectionID($SectionID)
+	{
+		$q = "SELECT * FROM assignments where SectionID=" . $SectionID;
+		$r = mysqli_query($this->con, $q);
+		if ($r == false) {
+			return 0;
+		} else {
+			return $r;
+		}
+	}
 	public function getAllStudentsInfo()
 	{
 		$q = "SELECT *,UserTypeTitle,DepartmentName,CONCAT(users.UserName,'[',users.UserID,']') as UserInfo FROM users LEFT OUTER JOIN department on users.DepartmentID = department.DepartmentID LEFT OUTER JOIN usertype on users.UserTypeID= usertype.UserTypeID where users.UserTypeID=1";
@@ -91,6 +101,16 @@ class IndexModel
 	public function getStudentsBySections($SectionID)
 	{
 		$q = "SELECT student_section.ID,section.SectionID,section.SectionName,users.UserID,users.UserName FROM `student_section` LEFT OUTER JOIN users on student_section.StudentID=users.UserID LEFT OUTER JOIN section on section.SectionID=student_section.SectionID where student_section.SectionID=" . $SectionID;
+		$r = mysqli_query($this->con, $q);
+		if ($r == false) {
+			return 0;
+		} else {
+			return $r;
+		}
+	}
+	public function getAllStudentSectionInfo($SemesterID, $StudentID)
+	{
+		$q = "select student_section.*,users.UserName,courses.CourseName,section.SectionName from student_section LEFT OUTER JOIN section on student_section.SectionID=section.SectionID LEFT OUTER JOIN courses on courses.CourseID=section.CourseID LEFT OUTER JOIN users on section.TeacherID=users.UserID WHERE student_section.StudentID=" . $StudentID . " and section.SemesterID=" . $SemesterID;
 		$r = mysqli_query($this->con, $q);
 		if ($r == false) {
 			return 0;
