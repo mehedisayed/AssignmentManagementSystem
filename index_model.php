@@ -57,6 +57,16 @@ class IndexModel
 			return $r;
 		}
 	}
+	public function getAssignmentSubmissionInfoBySectionIDStudentID($AssignmentID, $StudentID)
+	{
+		$q = "SELECT * FROM student_assignment_submission where AssignmentID=" . $AssignmentID . " and StudentID=" . $StudentID;
+		$r = mysqli_query($this->con, $q);
+		if ($r == false) {
+			return 0;
+		} else {
+			return $r;
+		}
+	}
 	public function getAllStudentsInfo()
 	{
 		$q = "SELECT *,UserTypeTitle,DepartmentName,CONCAT(users.UserName,'[',users.UserID,']') as UserInfo FROM users LEFT OUTER JOIN department on users.DepartmentID = department.DepartmentID LEFT OUTER JOIN usertype on users.UserTypeID= usertype.UserTypeID where users.UserTypeID=1";
@@ -162,6 +172,15 @@ class IndexModel
 	public function insert_user($UserName, $UserEmail, $Password, $Status, $UserTypeID, $DepartmentID)
 	{
 		$q = "INSERT INTO `users` (`UserID`, `UserName`, `UserEmail`, `Password`, `Status`, `UserTypeID`, `DepartmentID`) VALUES (NULL,'" . $UserName . "','" . $UserEmail . "','" . $Password . "'," . $Status . " ," . $UserTypeID . "," . $DepartmentID . ")";
+		if (mysqli_query($this->con, $q)) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	public function insert_assignment_submission($AssignmentID, $StudentID, $File_link, $SubmissionDate, $SubmissionStatus)
+	{
+		$q = "INSERT INTO `student_assignment_submission` (`ID`, `AssignmentID`, `StudentID`, `File_link`, `SubmissionDate`, `SubmissionStatus`) VALUES (NULL,'" . $AssignmentID . "','" . $StudentID . "','" . $File_link . "',CAST('" . $SubmissionDate . "' AS DATE)," . $SubmissionStatus . ")";
 		if (mysqli_query($this->con, $q)) {
 			return 1;
 		} else {
