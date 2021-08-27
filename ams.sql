@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 26, 2021 at 10:35 PM
+-- Generation Time: Aug 27, 2021 at 08:19 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.3.29
 
@@ -42,7 +42,8 @@ CREATE TABLE `assignments` (
 --
 
 INSERT INTO `assignments` (`AssignmentID`, `AssignmentTitle`, `AssignmentDetails`, `StartDate`, `EndDate`, `Status`, `SectionID`) VALUES
-(1, 'Midterm-1', 'Blah Blah', '2021-06-01', '2021-06-30', 1, 1);
+(1, 'Midterm-1', 'Blah Blah', '2021-06-01', '2021-06-30', 1, 1),
+(2, 'Final-Term-1', '-', '2021-08-18', '2021-08-30', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -108,10 +109,10 @@ CREATE TABLE `section` (
 INSERT INTO `section` (`SectionID`, `SectionName`, `CourseID`, `TeacherID`, `SemesterID`, `Status`) VALUES
 (1, 'A', 1, 3, 1, 1),
 (2, 'B', 1, 4, 1, 1),
-(3, 'A', 3, 3, 2, 1),
+(3, 'A', 3, 3, 1, 1),
 (5, 'A', 2, 3, 1, 1),
 (6, 'B', 2, 4, 1, 1),
-(7, 'B', 3, 4, 2, 1);
+(7, 'B', 3, 4, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -154,7 +155,9 @@ CREATE TABLE `student_assignment_submission` (
 --
 
 INSERT INTO `student_assignment_submission` (`ID`, `AssignmentID`, `StudentID`, `File_link`, `SubmissionDate`, `SubmissionStatus`, `Marks`) VALUES
-(1, 1, 2, 'zxhjugfbsdf', '2021-06-28', 1, 80);
+(1, 1, 1, '../uploads/sp.jpg', '2021-06-28', 1, 80),
+(3, 1, 1, '../uploads/sp.jpg', '2021-08-27', 1, NULL),
+(4, 2, 1, '../uploads/sp.jpg', '2021-08-27', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -174,9 +177,11 @@ CREATE TABLE `student_section` (
 
 INSERT INTO `student_section` (`ID`, `StudentID`, `SectionID`) VALUES
 (1, 1, 1),
-(2, 2, 1),
 (4, 2, 2),
-(5, 1, 2);
+(6, 1, 5),
+(9, 2, 6),
+(11, 2, 3),
+(12, 1, 7);
 
 -- --------------------------------------------------------
 
@@ -200,7 +205,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`UserID`, `UserName`, `UserEmail`, `Password`, `Status`, `UserTypeID`, `DepartmentID`) VALUES
 (1, 'ABCD', 'abcd@gmail.com', '1234', 1, 1, 1),
-(2, 'ABC', 'abc@gmail.com', '1234', 0, 1, 1),
+(2, 'ABC', 'abc@gmail.com', '1234', 1, 1, 1),
 (3, 'XYZ', 'xyz@gmail.com', '1234', 1, 2, 1),
 (4, 'WXYZ', 'wxyz@gmail.com', '1234', 1, 2, 1),
 (5, 'IJK', 'ijk@gmail.com', '1234', 1, 3, NULL),
@@ -304,7 +309,7 @@ ALTER TABLE `usertype`
 -- AUTO_INCREMENT for table `assignments`
 --
 ALTER TABLE `assignments`
-  MODIFY `AssignmentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `AssignmentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `courses`
@@ -334,13 +339,13 @@ ALTER TABLE `semester`
 -- AUTO_INCREMENT for table `student_assignment_submission`
 --
 ALTER TABLE `student_assignment_submission`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `student_section`
 --
 ALTER TABLE `student_section`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `users`
