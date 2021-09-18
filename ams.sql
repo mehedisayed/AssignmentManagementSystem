@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 27, 2021 at 08:19 PM
+-- Generation Time: Sep 18, 2021 at 06:22 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.3.29
 
@@ -33,6 +33,7 @@ CREATE TABLE `assignments` (
   `AssignmentDetails` varchar(150) NOT NULL,
   `StartDate` date NOT NULL,
   `EndDate` date NOT NULL,
+  `Question` varchar(500) DEFAULT NULL,
   `Status` tinyint(1) NOT NULL,
   `SectionID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -41,9 +42,10 @@ CREATE TABLE `assignments` (
 -- Dumping data for table `assignments`
 --
 
-INSERT INTO `assignments` (`AssignmentID`, `AssignmentTitle`, `AssignmentDetails`, `StartDate`, `EndDate`, `Status`, `SectionID`) VALUES
-(1, 'Midterm-1', 'Blah Blah', '2021-06-01', '2021-06-30', 1, 1),
-(2, 'Final-Term-1', '-', '2021-08-18', '2021-08-30', 1, 1);
+INSERT INTO `assignments` (`AssignmentID`, `AssignmentTitle`, `AssignmentDetails`, `StartDate`, `EndDate`, `Question`, `Status`, `SectionID`) VALUES
+(1, 'Midterm-1', 'Blah Blah', '2021-06-01', '2021-06-30', '../uploads/Question/Midterm-1.jpg', 1, 1),
+(2, 'Final-Term-1', '-', '2021-08-18', '2021-08-30', '../uploads/Question/Finalterm-1.jpg', 1, 1),
+(3, 'Assignment', 'Assignment', '2021-09-09', '2021-09-02', '../uploads/Question/Assignment.jpg', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -155,9 +157,8 @@ CREATE TABLE `student_assignment_submission` (
 --
 
 INSERT INTO `student_assignment_submission` (`ID`, `AssignmentID`, `StudentID`, `File_link`, `SubmissionDate`, `SubmissionStatus`, `Marks`) VALUES
-(1, 1, 1, '../uploads/sp.jpg', '2021-06-28', 1, 80),
-(3, 1, 1, '../uploads/sp.jpg', '2021-08-27', 1, NULL),
-(4, 2, 1, '../uploads/sp.jpg', '2021-08-27', 1, NULL);
+(1, 1, 1, '../uploads/Answers/MT-1_ABCD_1.jpg', '2021-06-28', 1, 80),
+(7, 3, 2, '../uploads/Answers/MT-1_ABC_2.jpg', '2021-09-18', 1, 80);
 
 -- --------------------------------------------------------
 
@@ -309,7 +310,7 @@ ALTER TABLE `usertype`
 -- AUTO_INCREMENT for table `assignments`
 --
 ALTER TABLE `assignments`
-  MODIFY `AssignmentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `AssignmentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `courses`
@@ -339,13 +340,13 @@ ALTER TABLE `semester`
 -- AUTO_INCREMENT for table `student_assignment_submission`
 --
 ALTER TABLE `student_assignment_submission`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `student_section`
 --
 ALTER TABLE `student_section`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `users`
