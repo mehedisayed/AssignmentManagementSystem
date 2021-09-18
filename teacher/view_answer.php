@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <title>Assignments</title>
+  <title>Answer</title>
   <link rel="stylesheet" href="css.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
@@ -53,42 +53,20 @@
       <!-- col 2 -->
       <div class="col-10 bg-transparent">
         <div class="container-fluid container-responsive">
-          <a href="new_assignment.php?SectionID=<?php echo $_GET["SectionID"] ?>" class=" btn btn-outline-info mb-2"> New Assignment</a>
-          <div class="table-responsive">
-            <table class="table  table-sm table-hover table-bordered">
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Title</th>
-                  <th scope="col">Details</th>
-                  <th scope="col">Start Date</th>
-                  <th scope="col">End Date</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Question</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php
-                require_once('../index_model.php');
-                $indObj = new IndexModel();
-                $rs = $indObj->getAssignmentInfoBySectionID($_GET["SectionID"]);
-                while ($d = mysqli_fetch_assoc($rs)) {
-                  echo $str = "<tr><td>" . $d["AssignmentTitle"] . "</td><td>" . $d["AssignmentDetails"] . "</td><td>" . $d["StartDate"] . "</td><td>" . $d["EndDate"] . "</td>";
-                  if ($d["Status"] == 1) {
-                    echo $str = " <td>Active</td>";
-                  } else {
-                    echo $str = " <td>Deactivated</td>";
-                  }
-                  echo  $str = " <td>" . $d["Question"] . "</td><td>
-                  <a href='edit_assignment.php?AssignmentID=" . $d["AssignmentID"] . "' class='btn btn-outline-dark mb-2'>Edit Assignment</a>
-                      <a href='show_submitted_students.php?AssignmentID=" . $d["AssignmentID"] . "' class='btn btn-outline-primary'>Submitted Students</a>
-                      </td></tr>";
-                }
-                ?>
-              </tbody>
-            </table>
-          </div>
-
+          <?php
+          require_once('../index_model.php');
+          $indObj = new IndexModel();
+          $rs = $indObj->getAnswerByID($_GET["ID"]);
+          while ($d = mysqli_fetch_assoc($rs)) {
+            if ($d["File_link"] == null) {
+              echo "Answer not Available.";
+            } else {
+          ?>
+              <img src="<?php echo $d["File_link"] ?>">
+          <?php
+            }
+          }
+          ?>
         </div>
       </div>
       <!--end  2nd row -->

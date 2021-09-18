@@ -73,7 +73,7 @@
                 while ($d = mysqli_fetch_assoc($rs)) {
                   echo $str = "<tr><td>" . $d["SectionName"] . "</td><td>" . $d["CourseName"] . "</td><td>" . $d["UserName"] . "</td>";
                   echo  $str = "<td>
-                      <a href='assignments.php?SectionID=" . $d['SectionID'] . "' class='btn btn-outline-dark'>Show Assignements</a>
+                      <a href='assignments.php?SectionID=" . $d['SectionID'] . "' class='btn btn-outline-dark'>Manage Assignements</a>
                       </td></tr>";
                 }
                 ?>

@@ -77,6 +77,26 @@ class IndexModel
 			return $r;
 		}
 	}
+	public function getAssignmentSubmissionInfoBYAssignmentID($AssignmentID)
+	{
+		$q = "SELECT student_assignment_submission.*,users.UserName FROM student_assignment_submission LEFT OUTER JOIN users on users.UserID=student_assignment_submission.StudentID where AssignmentID=" . $AssignmentID;
+		$r = mysqli_query($this->con, $q);
+		if ($r == false) {
+			return 0;
+		} else {
+			return $r;
+		}
+	}
+	public function getAnswerByID($ID)
+	{
+		$q = "SELECT student_assignment_submission.*,users.UserName FROM student_assignment_submission LEFT OUTER JOIN users on users.UserID=student_assignment_submission.StudentID where ID=" . $ID;
+		$r = mysqli_query($this->con, $q);
+		if ($r == false) {
+			return 0;
+		} else {
+			return $r;
+		}
+	}
 	public function getAllStudentsInfo()
 	{
 		$q = "SELECT *,UserTypeTitle,DepartmentName,CONCAT(users.UserName,'[',users.UserID,']') as UserInfo FROM users LEFT OUTER JOIN department on users.DepartmentID = department.DepartmentID LEFT OUTER JOIN usertype on users.UserTypeID= usertype.UserTypeID where users.UserTypeID=1";
@@ -345,6 +365,15 @@ class IndexModel
 	public function update_department($DepartmentID, $DepartmentName)
 	{
 		$q = "UPDATE `department` SET `DepartmentName`='" . $DepartmentName . "' WHERE `DepartmentID`=" . $DepartmentID;
+		if (mysqli_query($this->con, $q)) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	public function update_answer($ID, $Marks)
+	{
+		$q = "UPDATE `student_assignment_submission` SET `Marks`='" . $Marks . "' WHERE `ID`=" . $ID;
 		if (mysqli_query($this->con, $q)) {
 			return 1;
 		} else {

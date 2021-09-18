@@ -53,20 +53,16 @@
       <!-- col 2 -->
       <div class="col-10 bg-transparent">
         <div class="container-fluid container-responsive">
-          <form action="submit_assignment.php" method="post" enctype="multipart/form-data">
-            Select File to upload:
-            <input type="file" name="fileToUpload" id="fileToUpload">
-            <input type="hidden" name="AssignmentID" id="AssignmentID" value=<?php echo $_GET["AssignmentID"] ?>>
-            <input type="submit" value="Upload Image" class="btn btn-outline-info mb-2 " name="submit">
-          </form>
-
           <div class="table-responsive">
             <table class="table  table-sm table-hover table-bordered">
               <thead class="thead-dark">
                 <tr>
+                  <th scope="col">Student ID</th>
+                  <th scope="col">Student Name</th>
                   <th scope="col">Submission Date</th>
                   <th scope="col">Submission Status</th>
                   <th scope="col">Marks </th>
+                  <th scope="col">Action </th>
                 </tr>
               </thead>
               <tbody>
@@ -74,15 +70,18 @@
                 require_once('../index_model.php');
                 session_start();
                 $indObj = new IndexModel();
-                $rs = $indObj->getAssignmentSubmissionInfoBySectionIDStudentID($_GET["AssignmentID"], $_SESSION["UserID"]);
+                $rs = $indObj->getAssignmentSubmissionInfoBYAssignmentID($_GET["AssignmentID"]);
                 while ($d = mysqli_fetch_assoc($rs)) {
-                  echo $str = "<tr><td>" . $d["SubmissionDate"] . "</td>";
+                  echo $str = "<tr><td>" . $d["StudentID"] . "</td><td>" . $d["UserName"] . "</td><td>" . $d["SubmissionDate"] . "</td>";
                   if ($d["SubmissionStatus"] == 1) {
                     echo $str = " <td>Submitted</td>";
                   } else {
                     echo $str = " <td>Unsubmitted</td>";
                   }
-                  echo  $str = "<td>" . $d["Marks"] . "</td></tr>";
+                  echo  $str = "<td>" . $d["Marks"] . "</td><td>
+                  <a href='edit_answer.php?ID=" . $d["ID"] . "' class='btn btn-outline-dark'>Edit</a>
+                  <a href='view_answer.php?ID=" . $d["ID"] . "' class='btn btn-outline-primary'>View Answer</a>
+                  </td></tr>";
                 }
                 ?>
               </tbody>

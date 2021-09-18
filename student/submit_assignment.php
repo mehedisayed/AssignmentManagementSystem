@@ -1,7 +1,7 @@
 <?php
 require_once('../index_model.php');
 
-$target_dir = "../uploads/";
+$target_dir = "../uploads/Answers/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -39,7 +39,7 @@ if ($uploadOk == 0) {
 		session_start();
 		$AssignmentID = $_POST['AssignmentID'];
 		$StudentID = $_SESSION["UserID"];
-		$File_link = "../uploads/" . htmlspecialchars(basename($_FILES["fileToUpload"]["name"]));
+		$File_link = "../uploads/Answers/" . htmlspecialchars(basename($_FILES["fileToUpload"]["name"]));
 		$SubmissionDate = date("Y-m-d H:i:s");
 		$SubmissionStatus = 1;
 		$indObj = new IndexModel();
