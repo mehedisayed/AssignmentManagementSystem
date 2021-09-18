@@ -57,6 +57,16 @@ class IndexModel
 			return $r;
 		}
 	}
+	public function getQuestionBySectionID($AssignmentID)
+	{
+		$q = "SELECT * FROM assignments where AssignmentID=" . $AssignmentID;
+		$r = mysqli_query($this->con, $q);
+		if ($r == false) {
+			return 0;
+		} else {
+			return $r;
+		}
+	}
 	public function getAssignmentSubmissionInfoBySectionIDStudentID($AssignmentID, $StudentID)
 	{
 		$q = "SELECT * FROM student_assignment_submission where AssignmentID=" . $AssignmentID . " and StudentID=" . $StudentID;
@@ -128,6 +138,16 @@ class IndexModel
 			return $r;
 		}
 	}
+	public function getAllTeacherSectionInfo($SemesterID, $TeacherID)
+	{
+		$q = "select section.*,users.UserName,courses.CourseName from section LEFT OUTER JOIN  courses on courses.CourseID=section.CourseID LEFT OUTER JOIN users on section.TeacherID=users.UserID WHERE section.TeacherID=" . $TeacherID . " and section.SemesterID=" . $SemesterID;
+		$r = mysqli_query($this->con, $q);
+		if ($r == false) {
+			return 0;
+		} else {
+			return $r;
+		}
+	}
 	public function getAllUserTypesInfo()
 	{
 		$q = "SELECT * FROM usertype";
@@ -181,6 +201,15 @@ class IndexModel
 	public function insert_assignment_submission($AssignmentID, $StudentID, $File_link, $SubmissionDate, $SubmissionStatus)
 	{
 		$q = "INSERT INTO `student_assignment_submission` (`ID`, `AssignmentID`, `StudentID`, `File_link`, `SubmissionDate`, `SubmissionStatus`) VALUES (NULL,'" . $AssignmentID . "','" . $StudentID . "','" . $File_link . "',CAST('" . $SubmissionDate . "' AS DATE)," . $SubmissionStatus . ")";
+		if (mysqli_query($this->con, $q)) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	public function insert_assignment($AssignmentTitle, $AssignmentDetails, $StartDate, $EndDate, $Status, $SectionID, $File_link)
+	{
+		$q = "INSERT INTO `assignments` (`AssignmentID`, `AssignmentTitle`, `AssignmentDetails`, `StartDate`, `EndDate`, `Status`, `SectionID`,`Question`) VALUES (NULL,'" . $AssignmentTitle . "','" . $AssignmentDetails . "',CAST('" . $StartDate . "' AS DATE),CAST('" . $EndDate . "' AS DATE)," . $Status . "," . $SectionID . ",'" . $File_link . "' )";
 		if (mysqli_query($this->con, $q)) {
 			return 1;
 		} else {
@@ -325,6 +354,24 @@ class IndexModel
 	public function update_semester($SemesterID, $SemesterTitle, $Status)
 	{
 		$q = "UPDATE `semester` SET `SemesterTitle`='" . $SemesterTitle . "', `Status`=" . $Status . " WHERE `SemesterID`=" . $SemesterID;
+		if (mysqli_query($this->con, $q)) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	public function update_assignmentWithoutQuestion($AssignmentID, $AssignmentTitle, $AssignmentDetails, $StartDate, $EndDate, $Status)
+	{
+		$q = "UPDATE `assignments` SET `AssignmentTitle`='" . $AssignmentTitle . "', `AssignmentDetails`='" . $AssignmentDetails . "',`StartDate`= CAST('" . $StartDate . "' AS DATE),`EndDate`= CAST('" . $EndDate . "' AS DATE), `Status`=" . $Status . " WHERE `AssignmentID`=" . $AssignmentID;
+		if (mysqli_query($this->con, $q)) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	public function update_assignment($AssignmentID, $AssignmentTitle, $AssignmentDetails, $StartDate, $EndDate, $Status, $File_link)
+	{
+		$q = "UPDATE `assignments` SET `AssignmentTitle`='" . $AssignmentTitle . "', `AssignmentDetails`='" . $AssignmentDetails . "',`StartDate`= CAST('" . $StartDate . "' AS DATE),`EndDate`= CAST('" . $EndDate . "' AS DATE), `Status`=" . $Status . ", `Question`='" . $File_link . "' WHERE `AssignmentID`=" . $AssignmentID;
 		if (mysqli_query($this->con, $q)) {
 			return 1;
 		} else {

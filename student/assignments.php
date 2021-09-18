@@ -78,7 +78,8 @@
                     echo $str = " <td>Deactivated</td>";
                   }
                   echo  $str = "<td>
-                      <a href='show_assignment.php?AssignmentID=" . $d["AssignmentID"] . "' class='btn btn-outline-dark'>Show Assignment</a>
+                      <a href='show_assignment.php?AssignmentID=" . $d["AssignmentID"] . "' class='btn btn-outline-dark'>Submit Assignment</a>
+                      <a href='view_question.php?AssignmentID=" . $d["AssignmentID"] . "' class='btn btn-outline-dark'>View Question</a>
                       </td></tr>";
                 }
                 ?>
